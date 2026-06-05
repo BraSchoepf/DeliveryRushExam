@@ -798,6 +798,7 @@ GameObject:
   - component: {fileID: 758901908}
   - component: {fileID: 758901907}
   - component: {fileID: 758901906}
+  - component: {fileID: 758901913}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -882,7 +883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4970e107de8e645c397c2e9c994c6c05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliveryRushExam.Core.OrderManager
-  spawnInterval: 2.5
+  spawnInterval: 2
   maxActiveOrders: 6
   verboseLogs: 0
   scoreManager: {fileID: 758901909}
@@ -898,7 +899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b71471cf2b9e4ba491e41582fcba5ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliveryRushExam.Core.GameManager
-  matchDurationSeconds: 90
+  matchDurationSeconds: 20
   autoStart: 1
   verboseLogs: 0
   orderManager: {fileID: 758901910}
@@ -920,6 +921,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &758901913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758901905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6ee4f0dd1f7b4e85b2d7270d9924248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeliveryRushExam.Save.SaveServicesInstaller
+  saveMode: 1
 --- !u!1 &784831737
 GameObject:
   m_ObjectHideFlags: 0

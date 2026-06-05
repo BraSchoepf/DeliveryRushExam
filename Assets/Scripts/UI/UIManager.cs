@@ -34,6 +34,7 @@ namespace DeliveryRushExam.UI
         [SerializeField] private TMP_Text resultsText;
 
         private readonly List<OrderButtonView> orderViews = new List<OrderButtonView>();
+        private readonly Queue<ScorePopupView> popupPool = new();
 
         private void Awake()
         {
@@ -50,6 +51,21 @@ namespace DeliveryRushExam.UI
             if (scoreManager == null)
             {
                 scoreManager = FindFirstObjectByType<ScoreManager>();
+            }
+        }
+
+        private void Start()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                ScorePopupView popup =
+                    Instantiate(scorePopupPrefab, popupsContainer);
+
+                popup.gameObject.SetActive(false);
+
+                popup.OnLifetimeEnded += ReturnPopupToPool;
+
+                popupPool.Enqueue(popup);
             }
         }
 
@@ -144,10 +160,39 @@ namespace DeliveryRushExam.UI
 
         private void ShowScorePopup(OrderData order)
         {
-            ScorePopupView popup = Instantiate(scorePopupPrefab, popupsContainer);
+            ScorePopupView popup = GetPopup();
+
             popup.gameObject.SetActive(true);
-            popup.transform.localPosition = new Vector3(Random.Range(-90f, 90f), Random.Range(-25f, 35f), 0f);
+
+            popup.transform.localPosition =
+                new Vector3(
+                    Random.Range(-90f, 90f),
+                    Random.Range(-25f, 35f),
+                    0f);
+
             popup.Setup("+" + order.rewardPoints + " points");
+        }
+
+        private ScorePopupView GetPopup()
+        {
+            if (popupPool.Count > 0)
+            {
+                return popupPool.Dequeue();
+            }
+
+            ScorePopupView popup =
+                Instantiate(scorePopupPrefab, popupsContainer);
+
+            popup.OnLifetimeEnded += ReturnPopupToPool;
+
+            return popup;
+        }
+
+        private void ReturnPopupToPool(ScorePopupView popup)
+        {
+            popup.gameObject.SetActive(false);
+
+            popupPool.Enqueue(popup);
         }
     }
 }
